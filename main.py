@@ -9,4 +9,11 @@ def mensaje():
 
 @app.get("/clientes")
 def clientes():
-    return {"clientes": ["Jhon", "Pipe", "Suns", "Yoberson", "Quiroga"]}
+    return {
+        "id": 1,
+        "nombre": "Chanty",
+        "apellido": "Beltran",
+        "correo": "ChantyBeltran@gmail.com",
+        "telefono": "3214567890",
+        "contraseña": "123456789"
+    }
