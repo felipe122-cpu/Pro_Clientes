@@ -1,24 +1,17 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
 
 app = FastAPI()
 
-lista_clientes = [
-        {
-        "id": 1,
-        "nombre": "Chanty",
-        "apellido": "Beltran",
-        "correo": "ChantyBeltran@gmail.com",
-        "telefono": "3214567890",
-        "contraseña": "123456789"
-    },
-    {
-     "id": 2,
-        "nombre": "Eddy",
-        "apellido": "Suarez",
-        "correo": "EddySuarez@gmail.com",
-        "telefono": "3214567891",
-        "contraseña": "987654321"   
-    }]
+lista_clientes:list[cliente] = []
+
+class cliente(BaseModel):
+    id: int
+    nombre: str
+    apellido:str
+    email: str
+    telefono: int
+    contraseña: str
 
 @app.get("/")
 def mensaje():
@@ -30,5 +23,12 @@ def clientes():
     return lista_clientes
 
 @app.get("/clientes/{idClientes}")
-def clientes(cliente_id):
-    return lista_clientes
+def clientes(cliente_id: int):
+    for i, obj_cliente in enumerate (lista_clientes):
+        if obj_cliente.get("id") == cliente_id:
+            return obj_cliente
+
+@app.post("/clientes")
+def crear_cliente(datos_cliente: cliente):
+    lista_clientes.append(datos_cliente)
+    return datos_cliente
