@@ -32,7 +32,8 @@
 - "pip list"  Para ver que se intalo y las versiones de fastapi que instalo
 - "fastapi dev main.py"  Para iniciar el servidor local
 
-# Terminal bash
+# Subirlo al repositorio
+## Terminal bash
 
 - "git init -b main"
 - "Git config --global --replace-all user.name"
@@ -41,3 +42,12 @@
 - "Git commit -m "nombre del commit""
 - "git remote add origin https://github.com/felipe122-cpu/Pro_Clientes.git"
 - "Git push -u origin main"
+
+# Videos
+## Listar clientes
+- paso a paso 
+1. se importa la libreria de para los modelos "from pydantic import BaseModel"
+2. se hace la lista
+3. se crea la clase lista
+4. se crea la variable para buscar el id
+5. se crea la variable con el metodo *post* para uno mismo crear la lista
