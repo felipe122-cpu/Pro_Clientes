@@ -68,3 +68,12 @@
 5. Importar clase
 6. Hacer codigo
 7. Validar los datos que se van a enviar
+
+## endpoints vacios
+- paso a paso
+1. Crear listas de factura y transacción
+2. Crear los modulos de factura y transacción
+3. Hacer codigo
+
+##
+- paso a paso
