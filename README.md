@@ -58,3 +58,13 @@
 2. se crea una carpeta para los modelos, separando las clases
 3. se separan
 4. se validan los datos con una variable "Validar_cliente = cliente.model_validate(datos_cliente.model_dump())"
+
+## Creación endpoint listar
+- paso a paso
+1. Habilitar la programación asincrona con "async"
+2. Hacer endpoint con patch
+3. Generar id
+4. Crear clase editar cliente
+5. Importar clase
+6. Hacer codigo
+7. Validar los datos que se van a enviar
