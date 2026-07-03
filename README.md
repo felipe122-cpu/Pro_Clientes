@@ -50,7 +50,7 @@
 2. se hace la lista
 3. se crea la clase lista
 4. se crea la variable para buscar el id
-5. se crea la variable con el metodo *post* para uno mismo crear el cliente
+5. se crea la variable con el metodo "post" para uno mismo crear el cliente
 
 ## Crear modelos
 - paso a paso 
@@ -87,3 +87,14 @@
 1. se busca el cliente
 2. se valida los datos
 3. Se tipean los datos en los modelos
+
+## Continuación Crear factura
+- paso a paso
+1. se consulta el id actual de la factura
+2. usar metodo "getattr()" en los modelos
+3. Recorrer las listas segun el id
+4. Editar endpoint Transacciones
+5. Buscar factura
+6. validar los datos
+7. Se agrega el factura encontrada con .append
+8. Editar endpoint eliminar y editar de transaccion y factura
