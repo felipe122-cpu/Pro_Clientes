@@ -76,38 +76,75 @@ async def crear_factura(cliente_id: int, datos_factura: CrearFactura):
     facturaValidar = factura.model_validate(datos_factura.model_dump())
     facturaValidar.cliente = cliente_encontrado
     facturaValidar.id =  len(lista_factura)+1
+    lista_factura.append(facturaValidar)
     return facturaValidar
 
 
 @app.patch("/facturas/{factura_id}", response_model=factura)
 async def editar_factura(factura_id: int, datos_factura: factura):
-    pass
+    for i, obj_factura in enumerate(lista_factura):
+        if obj_factura.id == factura_id:
+            Validar_factura = factura.model_validate(datos_factura.model_dump())
+            Validar_factura.id = factura_id
+            lista_facturas[i] = Validar_factura
+            return Validar_factura
+    raise HTTPException(status_code=400,detail=f"el cliente con id {factura_id}, no existe.")
 
 @app.delete("/facturas/{factura_id}", response_model=factura)
 async def eliminar_factura(factura_id):
-    pass
+    for i, obj_factura in enumerate(lista_factura):
+        if obj_factura.id == factura_id:
+            factura_eliminada = lista_factura.pop(i)
+            return factura_eliminada
+    raise HTTPException(status_code=400, detail=f"La factura con id {factura_id}, no existe.")
 
 #endpoint Transacción
 @app.get("/transacciones", response_model=list[Transaccion])
-async def listar_ftransacciones():
-    pass
+async def listar_transacciones():
+    return lista_transaccion
 
 
-@app.get("/transacciones/{id_transaccion}", response_model=Transaccion)
-async def listar_transaccion(id_transaccion: int):
-    pass
+@app.get("/transacciones/{transaccion_id}", response_model=Transaccion)
+async def listar_transaccion(transaccion_id: int):
+    for i, obj_transaccion in enumerate (lista_transaccion):
+        if obj_transaccion.id == transaccion_id:
+             return obj_transaccion
+    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST ,detail=f"la transaccion con el id {transaccion_id}, no existe.")
 
 
-@app.post("/transacciones/{id_factura}", response_model=Transaccion)
-async def crear_transaccion(id_factura: int, datos_transaccion: Transaccion):
-    pass
+@app.post("/transacciones/{factura_id}", response_model=Transaccion)
+async def crear_transaccion(factura_id: int, datos_transaccion: transaccionCrear):
+#Buscar factura
+    factura_encontrada = None
+    for factura in lista_factura:
+        if factura.id == factura_id:
+            factura_encontrada = factura
+
+    if not factura_encontrado:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"la factura con id {factura_id} no existe.")
+
+    TransaccionValidar = Transaccion.model_validate(datos_transaccion.model_dump())
+    TransaccionValidar.factura_id = factura_id
+    factura_encontrada.transacciones.append(TransaccionValidar)
+    TransaccionValidar.id =  len(lista_transaccion)+1
+    return TransaccionValidar
 
 
 @app.patch("/transacciones/{id_transaccion}", response_model=Transaccion)
 async def editar_transaccion(id_transaccion: int, datos_transaccion: Transaccion):
-    pass
+    for i, obj_transaccion in enumerate(lista_transaccion):
+        if obj_transaccion.id == transaccion_id:
+            Validar_transaccion = transaccion.model_validate(datos_transaccion.model_dump())
+            Validar_transaccion.id = transaccion_id
+            lista_transacciones[i] = Validar_transaccion
+            return Validar_transaccion
+    raise HTTPException(status_code=400,detail=f"La transaccion con id {transaccion_id}, no existe.")
 
 
-@app.delete("/transacciones/{id_transaccion}", response_model=Transaccion)
-async def eliminar_transaccion(id_transaccion: int):
-    pass
+@app.delete("/transacciones/{transaccion_id}", response_model=Transaccion)
+async def eliminar_transaccion(transaccion_id: int):
+    for i, obj_transaccion in enumerate(lista_transaccion):
+        if obj_transaccion.id == transaccion_id:
+            transaccion_eliminada = lista_transaccion.pop(i)
+            return transaccion_eliminada
+    raise HTTPException(status_code=400, detail=f"La transaccion con id {transaccion_id}, no existe.")
