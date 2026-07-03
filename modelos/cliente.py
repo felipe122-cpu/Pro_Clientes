@@ -12,3 +12,6 @@ class ClearCliente(clienteBase):
 
 class cliente(clienteBase):
     id: int | None = None
+
+class EditarCliente(clienteBase):
+    pass
