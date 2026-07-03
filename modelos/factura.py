@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from cliente import cliente
+from .cliente import cliente
 
 class FacturarBase(BaseModel):
     fecha: str

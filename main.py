@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, status
 from modelos.cliente import cliente, ClearCliente, EditarCliente
 from modelos.factura import factura, CrearFactura, EditarFactura
 from modelos.transaccion import transaccion, CrearTransaccion, EditarTransaccion
@@ -19,6 +19,7 @@ async def clientes(cliente_id: int):
     for i, obj_cliente in enumerate (lista_clientes):
         if obj_cliente.id == cliente_id:
              return obj_cliente
+    return HTTPException(status_code=400,detail=f"el cliente con el id {cliente_id}, no existe.")
 
 @app.post("/clientes", response_model=cliente)
 async def crear_cliente(datos_cliente: ClearCliente):
@@ -55,10 +56,12 @@ async def listar_facturas():
     return lista_factura
 
 
-@app.get("/facturas/{id_factura}", response_model=Factura)
-async def listar_factura(id_factura: int):
-    pass
-
+@app.get("/facturas/{factura_id}", response_model=Factura)
+async def listar_factura(factura_id: int):
+    for i, obj_factura in enumerate (lista_facturas):
+        if obj_factura.id == factura_id:
+             return obj_factura
+    return HTTPException(status_code=status.HTTP_400_BAD_REQUEST ,detail=f"la factura con el id {factura_id}, no existe.")
 
 @app.post("/facturas/{id_cliente}", response_model=Factura)
 async def crear_factura(id_cliente: int, datos_factura: Factura):
