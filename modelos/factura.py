@@ -12,7 +12,15 @@ class FacturarBase(BaseModel):
     @computed_field  #Permite definir propiedades o metodos que se calculan de otros campos 
     @property  #Para convertir un metodo en una propiedad 
     def vr_total(self) -> float:
-        return 0
+        factura_id_actual = getattr(self, "id", None)
+        TotalFactura = 0.0
+        if not factura_id_actual or not self.transacciones:
+            return TotalFactura
+            #recorrer lista de transacciones segun el id
+            for Transaccion in self.transacciones:
+                if Transaccion.factura_id == factura_id_actual: 
+                    TotalFactura += Transaccion.vr_unitario * Transaccion.cantidad 
+        return TotalFactura
 
 
 class CrearFactura(FacturarBase):
