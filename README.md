@@ -50,4 +50,11 @@
 2. se hace la lista
 3. se crea la clase lista
 4. se crea la variable para buscar el id
-5. se crea la variable con el metodo *post* para uno mismo crear la lista
+5. se crea la variable con el metodo *post* para uno mismo crear el cliente
+
+## Crear modelos
+- paso a paso 
+1. se coloca en todos los decoradores "response_model=(cliente)" para que retorne todos los datos del cliente, exempo a el primer decorador, por que es una lista, entonces se pone "response_model=list[cliente]"
+2. se crea una carpeta para los modelos, separando las clases
+3. se separan
+4. se validan los datos con una variable "Validar_cliente = cliente.model_validate(datos_cliente.model_dump())"
