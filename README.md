@@ -79,4 +79,11 @@
 - paso a paso
 1. editar el listar facturas
 2. importar dependecia status
-3. implementar status con "status.HTTP._400_BAD_REQUEST"
+4. hacer codigo
+4. implementar status con "status.HTTP_400_BAD_REQUEST"
+
+##  Endpoint Crear factura
+- paso a paso
+1. se busca el cliente
+2. se valida los datos
+3. Se tipean los datos en los modelos
