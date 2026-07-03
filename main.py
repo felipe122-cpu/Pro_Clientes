@@ -1,25 +1,25 @@
 from fastapi import FastAPI, HTTPException, status
 from modelos.cliente import cliente, ClearCliente, EditarCliente
 from modelos.factura import factura, CrearFactura, EditarFactura
-from modelos.transaccion import transaccion, CrearTransaccion, EditarTransaccion
+from modelos.transaccion import Transaccion, CrearTransaccion, EditarTransaccion
 
 app = FastAPI()
 
 lista_clientes:list[cliente] = []
 lista_factura:list[factura] = []
-Lista_transaccion:list[transaccion] = []
+lista_transaccion:list[Transaccion] = []
 
 
 @app.get("/clientes", response_model=list[cliente])
 def clientes():
     return lista_clientes
 
-@app.get("/clientes/{idClientes}", response_model=(cliente))
+@app.get("/clientes/{clientes_id}", response_model=(cliente))
 async def clientes(cliente_id: int):
     for i, obj_cliente in enumerate (lista_clientes):
         if obj_cliente.id == cliente_id:
              return obj_cliente
-    return HTTPException(status_code=400,detail=f"el cliente con el id {cliente_id}, no existe.")
+    raise HTTPException(status_code=400,detail=f"el cliente con el id {cliente_id}, no existe.")
 
 @app.post("/clientes", response_model=cliente)
 async def crear_cliente(datos_cliente: ClearCliente):
@@ -39,7 +39,7 @@ async def editar_cliente(cliente_id: int, datos_cliente: EditarCliente):
             return Validar_cliente
     raise HTTPException(status_code=400,detail=f"el cliente con id {cliente_id}, no existe.")
 
-@app.delete("/clientes/{cliente_id}", response_model=Cliente)
+@app.delete("/clientes/{cliente_id}", response_model=cliente)
 async def eliminar_cliente(cliente_id: int):
     for i, obj_cliente in enumerate(lista_clientes):
         if obj_cliente.id == cliente_id:
@@ -51,29 +51,40 @@ async def eliminar_cliente(cliente_id: int):
 
 #endpoint Factura
 
-@app.get("/facturas", response_model=list[Factura])
+@app.get("/facturas", response_model=list[factura])
 async def listar_facturas():
     return lista_factura
 
 
-@app.get("/facturas/{factura_id}", response_model=Factura)
+@app.get("/facturas/{factura_id}", response_model=factura)
 async def listar_factura(factura_id: int):
     for i, obj_factura in enumerate (lista_facturas):
         if obj_factura.id == factura_id:
              return obj_factura
-    return HTTPException(status_code=status.HTTP_400_BAD_REQUEST ,detail=f"la factura con el id {factura_id}, no existe.")
+    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST ,detail=f"la factura con el id {factura_id}, no existe.")
 
-@app.post("/facturas/{id_cliente}", response_model=Factura)
-async def crear_factura(id_cliente: int, datos_factura: Factura):
+@app.post("/facturas/{cliente_id}", response_model=factura)
+async def crear_factura(cliente_id: int, datos_factura: CrearFactura):
+    cliente_encontrado = None
+    for cliente in lista_clientes:
+        if cliente.id == cliente_id:
+            cliente_encontrado = cliente
+
+    if not cliente_encontrado:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"el cliente con id {cliente_id} no existe.")
+
+    facturaValidar = factura.model_validate(datos_factura.model_dump())
+    facturaValidar.cliente = cliente_encontrado
+    facturaValidar.id =  len(lista_factura)+1
+    return facturaValidar
+
+
+@app.patch("/facturas/{factura_id}", response_model=factura)
+async def editar_factura(factura_id: int, datos_factura: factura):
     pass
 
-
-@app.patch("/facturas/{id_factura}", response_model=Factura)
-async def editar_factura(id_factura: int, datos_factura: Factura):
-    pass
-
-@app.delete("/facturas/{id_factura}", response_model=Factura)
-async def eliminar_factura(id_factura):
+@app.delete("/facturas/{factura_id}", response_model=factura)
+async def eliminar_factura(factura_id):
     pass
 
 #endpoint Transacción
