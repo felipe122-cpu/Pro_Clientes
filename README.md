@@ -75,5 +75,8 @@
 2. Crear los modulos de factura y transacción
 3. Hacer codigo
 
-##
+## edicion de endpoint factura
 - paso a paso
+1. editar el listar facturas
+2. importar dependecia status
+3. implementar status con "status.HTTP._400_BAD_REQUEST"
