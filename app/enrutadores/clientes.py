@@ -1,9 +1,10 @@
 from fastapi import APIRouter, HTTPException, status
-from modelos.cliente import cliente, ClearCliente, EditarCliente
+from ..modelos.cliente import cliente, ClearCliente, EditarCliente
+from ..listas import lista_cliente
 
 rutas_clientes = APIRouter()
 
-lista_clientes:list[cliente] = []
+# lista_clientes:list[cliente] = []
 
 @rutas_clientes.get("/clientes", response_model=list[cliente])
 def Listar_clientes():

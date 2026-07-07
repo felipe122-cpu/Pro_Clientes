@@ -1,9 +1,12 @@
 from fastapi import APIRouter, HTTPException, status
-from modelos.factura import factura, CrearFactura, EditarFactura
+from ..modelos.factura import factura, CrearFactura, EditarFactura
+from ..modelos.cliente import cliente
+from ..listas import lista_factura,lista_cliente
 
 rutas_factura = APIRouter()
 
-lista_factura:list[factura] = []
+# lista_factura:list[factura] = []
+# lista_cliente:list[cliente] = []
 
 @rutas_factura.get("/facturas", response_model=list[factura])
 async def listar_facturas():
@@ -22,7 +25,6 @@ async def crear_factura(cliente_id: int, datos_factura: CrearFactura):
     for cliente in lista_clientes:
         if cliente.id == cliente_id:
             cliente_encontrado = cliente
-
     if not cliente_encontrado:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"el cliente con id {cliente_id} no existe.")
 

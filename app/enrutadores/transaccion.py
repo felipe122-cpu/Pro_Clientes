@@ -1,10 +1,11 @@
 from fastapi import APIRouter, HTTPException, status
-from modelos.transaccion import Transaccion, CrearTransaccion, EditarTransaccion
-from enrutadores.factura import lista_factura
+from ..modelos.transaccion import Transaccion, CrearTransaccion, EditarTransaccion
+from ..modelos.factura import factura
+from ..listas import lista_factura, lista_transaccion
 
 rutas_Transaccion = APIRouter()
 
-lista_transaccion:list[Transaccion] = []
+# lista_transaccion:list[Transaccion] = []
 
 @rutas_Transaccion.get("/transacciones", response_model=list[Transaccion])
 async def listar_transacciones():
