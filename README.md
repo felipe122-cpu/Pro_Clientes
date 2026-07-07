@@ -109,3 +109,20 @@
 6. incluir rutas en main.py
 7. hacer documento *listas.py* para agregar todas las listas
 8. importar las listas a todos los documentos
+
+## Instalaciíon sqlmodel
+- paso a paso
+1. Instalar dependia sqlmodel "pip install sqlmodel"
+2. se importa las clases
+3. se le coloca nombre a la bs y la url
+4. se crea el motor de la base de datos
+5. Definir el metodo para crear las tablas
+6. Definir el metodo para la sesión
+7. se hace la inyección de dependencias
+8. se validan los datos en enrutadores/clientes, con add,commit y refresh
+9. En modelos/cliente, se importa sqlmodel, y se coloca sqlmodel en vez de BaseModel
+10. Se importa de sqlmodel "Field" y "Relationship"
+11. Se coloca Field(default=None) para que se guarde la inf
+12. Se importa al main la bs
+13. Se coloca en el main.py con "lifespan=crear_tablas" en "app = FastAPI()" y se guarda para tener el servidor sql, *Se puede abrir con comando:"sqlite3 bd_clientes.sqlite3" o descargando la dependencia sqlite viewer*
+14. 

@@ -1,16 +1,12 @@
 from fastapi import FastAPI, HTTPException, status
-from .modelos.cliente import cliente, ClearCliente, EditarCliente
-from .modelos.factura import factura, CrearFactura, EditarFactura
-from .modelos.transaccion import Transaccion, CrearTransaccion, EditarTransaccion
-from .enrutadores import clientes,transaccion,factura
+from .enrutadores.clientes import rutas_clientes
+from .enrutadores.factura import rutas_factura
+from .enrutadores.transaccion import rutas_Transaccion
+from .conexion_bs import crear_tablas
 
-app = FastAPI()
-
-# lista_clientes:list[cliente] = []
-# lista_factura:list[factura] = []
-# lista_transaccion:list[Transaccion] = []
+app = FastAPI(lifespan=crear_tablas)
 
 
-app.include_router(clientes.rutas_clientes, tags=["Clientes"])
-app.include_router(factura.rutas_factura, tags=["Factura"])
-app.include_router(transaccion.rutas_Transaccion, tags=["Transacción"])
+app.include_router(rutas_clientes, tags=["Clientes"])
+app.include_router(rutas_factura, tags=["Factura"])
+app.include_router(rutas_Transaccion, tags=["Transacción"])
