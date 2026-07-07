@@ -30,7 +30,7 @@
 - ".\entorno\Scripts\activate"  Para activar el entorno virtual
 - "pip install "fastapi[standard]""  Para instalar fastapi
 - "pip list"  Para ver que se intalo y las versiones de fastapi que instalo
-- "fastapi dev main.py"  Para iniciar el servidor local
+- "fastapi dev app/main.py"  Para iniciar el servidor local
 
 # Subirlo al repositorio
 ## Terminal bash
@@ -98,3 +98,12 @@
 6. validar los datos
 7. Se agrega el factura encontrada con .append
 8. Editar endpoint eliminar y editar de transaccion y factura
+
+## Crear enrutadores
+- paso a paso
+1. Crear carpeta enrutadores
+2. hacer enrutadores para cliente, factura y transaccion
+3. importar en cada ruta de fastApi `APIrouter`
+4. poner los endpoints en las rutas con el decorador "ruta_.."
+5. importar enrutadores en main.py
+6. incluir rutas en main.py
