@@ -107,3 +107,5 @@
 4. poner los endpoints en las rutas con el decorador "ruta_.."
 5. importar enrutadores en main.py
 6. incluir rutas en main.py
+7. hacer documento *listas.py* para agregar todas las listas
+8. importar las listas a todos los documentos
